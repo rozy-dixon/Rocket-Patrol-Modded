@@ -42,6 +42,23 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig)
+        // initialize countdown
+        this.countdown = game.settings.gameTimer/1000
+        // display countdown
+        let countdownConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.countdownLeft = this.add.text(borderUISize + borderPadding + 110, borderUISize + borderPadding*2, this.countdown, countdownConfig)
+        this.countdownTimer = this.time.addEvent({ delay: 1000, callback: this.updateCountdown, callbackScope: this, loop: true})
         // GAME OVER flag
         this.gameOver = false
         // 60-second play clock
@@ -56,7 +73,7 @@ class Play extends Phaser.Scene {
 
     update() {
         // check key input for restart
-        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
             this.scene.restart()
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
@@ -64,7 +81,7 @@ class Play extends Phaser.Scene {
         }
         this.starfield.tilePositionX -= 4
 
-        if(!this.gameOver) {               
+        if (!this.gameOver) {               
             this.p1Rocket.update()      // update rocket sprite
             this.ship01.update()        // update spaceships (x3)
             this.ship02.update()
@@ -73,7 +90,7 @@ class Play extends Phaser.Scene {
         }
 
         // check collisions
-        if(this.checkCollision(this.p1Rocket, this.ship03)) {
+        if (this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset()
             this.shipExplode(this.ship03)
         }
@@ -93,7 +110,7 @@ class Play extends Phaser.Scene {
 
     checkCollision(rocket, ship) {
         // simple AABB checking
-        if(rocket.x < ship.x + ship.width &&
+        if (rocket.x < ship.x + ship.width &&
             rocket.x + rocket.width > ship.x &&
             rocket.y < ship.y + ship.height &&
             rocket.height + rocket.y > ship.y) {
@@ -121,5 +138,12 @@ class Play extends Phaser.Scene {
         const explosions = [ 'sfx-explosion1', 'sfx-explosion2', 'sfx-explosion3', 'sfx-explosion4', 'sfx-explosion5' ]
         var explosionSound = explosions[Math.floor(Math.random()*5)]
         this.sound.play(explosionSound)
+    }
+
+    updateCountdown() {
+        if (!this.gameOver) {
+            this.countdown--
+            this.countdownLeft.text = this.countdown
+        }
     }
 }
