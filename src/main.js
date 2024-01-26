@@ -6,6 +6,7 @@
 // [ ] Display the time remaining (in seconds) on the screen (3)
 // [ ] Using a texture atlas, create a new animated sprite (three frames minimum) for the enemy spaceships (3)
 // [ ] Create a new title screen (e.g., new artwork, typography, layout) (3)
+// [X] Allow the player to control the Rocket after it's fired (1)
 
 let config = {
     type: Phaser.AUTO,
