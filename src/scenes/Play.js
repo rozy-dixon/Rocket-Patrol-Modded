@@ -51,6 +51,7 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5)
             this.gameOver = true
         }, null, this)
+        
     }
 
     update() {
@@ -86,7 +87,7 @@ class Play extends Phaser.Scene {
         }
         if (this.checkCollision(this.p1Rocket, this.shuttle)) {
             this.p1Rocket.reset()
-            console.log('shuttle kaboom!')
+            this.shipExplode(this.shuttle)
         }
     }
 
@@ -116,7 +117,9 @@ class Play extends Phaser.Scene {
         // score add and text update
         this.p1Score += ship.points
         this.scoreLeft.text = this.p1Score
-        // kaboom sound
-        this.sound.play('sfx-explosion')
-    }  
+        // kaboom sound x5
+        const explosions = [ 'sfx-explosion1', 'sfx-explosion2', 'sfx-explosion3', 'sfx-explosion4', 'sfx-explosion5' ]
+        var explosionSound = explosions[Math.floor(Math.random()*5)]
+        this.sound.play(explosionSound)
+    }
 }
