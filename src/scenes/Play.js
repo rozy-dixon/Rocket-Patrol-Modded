@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0)
         // borders and UI
         // x coord, y coord, width, height, color
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0) // green UI background
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xFFFFFF).setOrigin(0, 0) // green UI background 0x00FF00
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0) // white border top
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0) // white border bottom
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0) // white border left
@@ -32,8 +32,8 @@ class Play extends Phaser.Scene {
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#000000',     //'#F3B141',
+            color: '#FFFFFF',               //'#843605',
             align: 'right',
             padding: {
                 top: 5,
@@ -48,8 +48,8 @@ class Play extends Phaser.Scene {
         let countdownConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#000000',     //'#F3B141',
+            color: '#FFFFFF',               //'#843605',
             align: 'right',
             padding: {
                 top: 5,
