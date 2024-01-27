@@ -29,7 +29,7 @@ class Play extends Phaser.Scene {
         // initialize score
         this.p1Score = 0
         // display score
-        let scoreConfig = {
+        let UITextConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
             backgroundColor: '#000000',     //'#F3B141',
@@ -41,34 +41,29 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig)
-        // initialize countdown
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, UITextConfig)
+        // initialize and display high score
+        this.highScoreLeft = this.add.text(borderUISize + borderPadding + 110, borderUISize + borderPadding*2, highScore, UITextConfig)
+        // initialize and display countdown
         this.countdown = game.settings.gameTimer/1000
-        // display countdown
-        let countdownConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#000000',     //'#F3B141',
-            color: '#FFFFFF',               //'#843605',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
-        this.countdownLeft = this.add.text(borderUISize + borderPadding + 110, borderUISize + borderPadding*2, this.countdown, countdownConfig)
+        this.countdownLeft = this.add.text(borderUISize + borderPadding + (110*2), borderUISize + borderPadding*2, this.countdown, UITextConfig)
         this.countdownTimer = this.time.addEvent({ delay: 1000, callback: this.updateCountdown, callbackScope: this, loop: true})
+        // initialize and display "FIRE"
+        this.fire = 'FIRE'
+        this.fireLeft = this.add.text(borderUISize + borderPadding + (110*3), borderUISize+ borderPadding*2, this.fire, UITextConfig)
         // GAME OVER flag
         this.gameOver = false
         // 60-second play clock
-        scoreConfig.fixedWidth = 0
+        UITextConfig.fixedWidth = 0
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5)
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5)
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', UITextConfig).setOrigin(0.5)
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', UITextConfig).setOrigin(0.5)
+            if (this.p1Score > highScore) { 
+                highScore = this.p1Score
+                this.highScoreLeft.text = highScore
+            }
             this.gameOver = true
         }, null, this)
-        
     }
 
     update() {
@@ -105,6 +100,12 @@ class Play extends Phaser.Scene {
         if (this.checkCollision(this.p1Rocket, this.shuttle)) {
             this.p1Rocket.reset()
             this.shipExplode(this.shuttle)
+        }
+
+        if (this.p1Rocket.isFiring && !this.gameOver) {
+            this.fireLeft.setVisible(true);
+        } else {
+            this.fireLeft.setVisible(false);
         }
     }
 

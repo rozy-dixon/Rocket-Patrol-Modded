@@ -1,10 +1,9 @@
 // MODS:
 // [X] Create a new enemy Spaceship type (w/ new artwork) that's smaller, moves faster, and is worth more points (5)
 //     - this is the Spaceshuttle type
-// [ ] Implement mouse control for player movement and left mouse click to fire (5)
+// [ ] Implement a new timing/scoring mechanism that adds time to the clock for successful hits and subtracts time for misses (5)
 // [X] Create 4 new explosion sound effects and randomize which one plays on impact (3)
 // [X] Display the time remaining (in seconds) on the screen (3)
-// [ ] Using a texture atlas, create a new animated sprite (three frames minimum) for the enemy spaceships (3)
 // [ ] Create a new title screen (e.g., new artwork, typography, layout) (3)
 // [X] Allow the player to control the Rocket after it's fired (1)
 // [ ] Track a high score that persists across scenes and display it in the UI (1)
@@ -24,3 +23,5 @@ let keyFIRE, keyRESET, keyLEFT, keyRIGHT
 // set UI sizes
 let borderUISize = game.config.height / 15
 let borderPadding = borderUISize / 3
+// high score
+let highScore = 0
