@@ -3,6 +3,12 @@ class Play extends Phaser.Scene {
         super("playScene")
     }
 
+    init() {
+        this.SPEED = 300
+        this.SPEEDMIN = 50
+        this.SPEEDMAX = 150
+    }
+
     create() {
         // tile sprites
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0)
@@ -124,14 +130,17 @@ class Play extends Phaser.Scene {
     shipExplode(ship) {
         // temporarily hide ship
         ship.alpha = 0
-        // create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        boom.anims.play('explode')              // play explode animation
-        boom.on('animationcomplete', () => {    // callback after anim completes
-          ship.reset()                          // reset ship position
-          ship.alpha = 1                        // make ship visible again
-          boom.destroy()                        // remove explosion sprite
+        // particles
+        this.add.particles(ship.x, ship.y, '5x5', {
+            speed: Phaser.Math.Between(this.SPEEDMIN, this.SPEEDMAX),
+            tint: 0xFFFFFF,
+            lifespan: 500,
+            alpha: Phaser.Math.FloatBetween(0.50, 0.75),
+            maxParticles: 20,
+            blendMode: 'ADD'
         })
+        ship.reset()                        // reset ship position
+        ship.alpha = 1                      // make ship visible again
         // score add and text update
         this.p1Score += ship.points
         this.scoreLeft.text = this.p1Score
