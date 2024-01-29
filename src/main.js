@@ -1,3 +1,6 @@
+// NAME: Rosalind Dixon
+// MOD TITLE: Rounder Rocket Patrol
+// TIME: 11 or 12ish hours
 // MODS:
 // [X] Create a new enemy Spaceship type (w/ new artwork) that's smaller, moves faster, and is worth more points (5)
 //     - this is the Spaceshuttle type
@@ -6,6 +9,7 @@
 //     - main.js, Basic.js, and ArcadeCollide.js as primary references
 // [X] Create 4 new explosion sound effects and randomize which one plays on impact (3)
 // [X] Display the time remaining (in seconds) on the screen (3)
+//     - https://phaser.discourse.group/t/countdown-timer/2471/4 
 // [X] Create a new title screen (e.g., new artwork, typography, layout) (3)
 // [X] Allow the player to control the Rocket after it's fired (1)
 // [X] Track a high score that persists across scenes and display it in the UI (1)
